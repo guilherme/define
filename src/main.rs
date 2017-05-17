@@ -4,7 +4,7 @@ use std::process;
 
 use serde_json::{Value};
 
-mod pearson_dictionary;
+mod dictionaries;
 
 fn main() {
   let args: Vec<_> = env::args().collect();
@@ -17,7 +17,7 @@ fn main() {
     process::exit(1);
   }
 
-  let body = pearson_dictionary::PearsonDictionary::define(&headword);
+  let body = dictionaries::PearsonDictionary::define(&headword);
   let v: Value = serde_json::from_str(body.as_str()).unwrap();
   for words in v["results"].as_array().unwrap() {
     println!("word: {}", words["headword"]);
