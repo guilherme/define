@@ -3,6 +3,14 @@ name = "define"
 version = "0.1.0"
 authors = ["Guilherme Reis Campos <guilhermekbsa@gmail.com>"]
 
+[lib]
+name = "define"
+path = "src/lib.rs"
+
+[[bin]]
+name = "define"
+path = "src/main.rs"
+
 [dependencies]
 hyper = "0.10.9"
 serde_json = "1.0.1"
