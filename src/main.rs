@@ -1,10 +1,10 @@
 extern crate serde_json;
+extern crate define;
 use std::env;
 use std::process;
+use define::dictionaries;
 
 use serde_json::{Value};
-
-mod dictionaries;
 
 fn main() {
   let args: Vec<_> = env::args().collect();
@@ -28,6 +28,4 @@ fn main() {
       }
     }
   }
-  println!("{}", body);
-
 }
