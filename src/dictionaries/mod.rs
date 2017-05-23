@@ -1,2 +1,6 @@
 mod pearson_dictionary;
-pub use self::pearson_dictionary::PearsonDictionary as PearsonDictionary;
+mod definition;
+mod meaning;
+pub use self::definition::Definition;
+pub use self::meaning::Meaning;
+pub use self::pearson_dictionary::PearsonDictionary;
