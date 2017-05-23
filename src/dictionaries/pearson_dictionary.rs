@@ -4,7 +4,7 @@ use self::hyper::Client;
 use super::Definition;
 use super::Meaning;
 use std::io::Read;
-// use self::serde_json::{Value};
+use self::serde_json::{Value};
 
 pub struct PearsonDictionary {
 
@@ -17,17 +17,22 @@ impl PearsonDictionary {
     let mut body = String::new();
     match res.read_to_string(&mut body) {
       Ok(_) => {
-// let v: Value = serde_json::from_str(body.as_str()).unwrap();
-// for words in v["results"].as_array().unwrap() {
-//   println!("word: {}", words["headword"]);
-//   for sense in words["senses"].as_array().unwrap() {
-//     println!("definition(s):");
-//     for definition in sense["definition"].as_array().unwrap() {
-//       println!("{}", definition);
-//     }
-//   }
-// } */
-        vec![Definition { word: "hello".to_string(), meanings: vec![Meaning { description: "hello".to_string() }] }]
+        // TODO: CONVERT INTO A PARSER
+        let v: Value = serde_json::from_str(body.as_str()).unwrap();
+        let mut definitions: Vec<Definition> = Vec::new();
+        for words in v["results"].as_array().unwrap() {
+          let mut meanings: Vec<Meaning> = Vec::new();
+          for sense in words["senses"].as_array().unwrap() {
+            for definition in sense["definition"].as_array().unwrap() {
+              let meaning = Meaning { description: definition.as_str().unwrap().to_string() };
+              meanings.push(meaning);
+            }
+          }
+          // TODO: how to define it before the loop above?
+          let definition = Definition { word:  words["headword"].as_str().unwrap().to_string(), meanings: meanings };
+          definitions.push(definition);
+        }
+        definitions
       },
       Err(_) => {
         vec![]
